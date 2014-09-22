@@ -1,118 +1,66 @@
-//= require_directory ./libraries/
-//= require_directory ./plugins/
+//= require vendor/jquery-1.11.1.min
+//= require vendor/jquery.dataTables.min
+//= require vendor/jquery.timeago
+//= require vendor/jquery.url
+//= require vendor/highlight.pack
+//= require vendor/bootstrap.min
 //= require_self
 
-$(document).ready(function() {
-  // Configuration for fancy sortable tables for source file groups
-  $('.file_list').dataTable({
+$.extend(true, $.fn.dataTableExt, {
+  oJUIClasses: {
+    sSortJUI: "fa fa-sort",
+    sSortJUIAsc: "fa fa-sort-up",
+    sSortJUIAscAllowed: "fa fa-sort-up",
+    sSortJUIDesc: "fa fa-sort-down",
+    sSortJUIDescAllowed: "fa fa-sort-down"
+  }
+});
+
+$(function() {
+  var currentAnchor = (window.location.hash || "").replace("#", "");
+
+  $("abbr.timeago").timeago();
+
+  $(".file_list").dataTable({
     "aaSorting": [[ 1, "asc" ]],
     "bPaginate": false,
     "bJQueryUI": true,
-    "aoColumns": [
-      null,
-      { "sType": "percent" },
-      null,
-      null,
-      null,
-      null,
-      null
-    ]
+    "aoColumns": [ null, { "sType": "percent" }, null, null, null, null, null ]
   });
 
-  // Syntax highlight all files up front - deactivated
-  // $('.source_table pre code').each(function(i, e) {hljs.highlightBlock(e, '  ')});
+  $(".dataTables_filter input").addClass("form-control");
 
-  // Syntax highlight source files on first toggle of the file view popup
-  $("a.src_link").click(function() {
-    // Get the source file element that corresponds to the clicked element
-    var source_table = $($(this).attr('href'));
-
-    // If not highlighted yet, do it!
-    if (!source_table.hasClass('highlighted')) {
-      source_table.find('pre code').each(function(i, e) {hljs.highlightBlock(e, '  ')});
-      source_table.addClass('highlighted');
+  $(".modal").on("show.bs.modal", function() {
+    if (!$(this).hasClass("highlighted")) {
+      $(this).find("pre code").each(function(i, e) {hljs.highlightBlock(e, "  ")});
+      $(this).addClass("highlighted");
     };
   });
 
-  var prev_anchor;
-  var curr_anchor;
-
-  // Set-up of popup for source file views
-  $("a.src_link").colorbox({
-    transition: "none",
-    inline: true,
-    opacity: 1,
-    width: "95%",
-    height: "95%",
-    onLoad: function() {
-      if (prev_anchor) {
-        prev_anchor = jQuery.url.attr('anchor');
-      }
-      curr_anchor = this.href.split('#')[1];
-      window.location.hash = curr_anchor;
-    },
-    onCleanup: function() {
-      if (prev_anchor) {
-        $('a[href="#'+prev_anchor+'"]').click();
-        curr_anchor = prev_anchor;
-      } else {
-        $('.group_tabs a:first').click();
-        prev_anchor = curr_anchor;
-        curr_anchor = "#_AllFiles";
-      }
-      window.location.hash = curr_anchor;
-    }
+  $(".modal").on("shown.bs.modal", function() {
+    window.location.hash = $(this).attr("id");
+    $(".modal.in .focus-hidden").focus();
   });
 
-  // Hide src files and file list container after load
-  $('.source_files').hide();
-  $('.file_list_container').hide();
-
-  // Add tabs based upon existing file_list_containers
-  $('.file_list_container h2').each(function(){
-    var container_id = $(this).parent().attr('id');
-    var group_name = $(this).find('.group_name').first().html();
-    var covered_percent = $(this).find('.covered_percent').first().html();
-
-    $('.group_tabs').append('<li><a href="#' + container_id + '">' + group_name + ' ('+ covered_percent +')</a></li>');
+  $(".modal").on("hidden.bs.modal", function() {
+    window.location.hash = $(".nav-tabs li.active a").attr("href").replace("#", "_");
   });
 
-  $('.group_tabs a').each( function() {
-    $(this).addClass($(this).attr('href').replace('#', ''));
+  $("a[data-toggle='tab']").on("shown.bs.tab", function() {
+    window.location.hash = $(this).attr("href").replace("#", "_");
   });
 
-  // Make sure tabs don't get ugly focus borders when active
-  $('.group_tabs a').live('focus', function() { $(this).blur(); });
+  if (currentAnchor) {
+    if (currentAnchor.length == 40) {
+      $(".nav-tabs a:first").trigger("click");
 
-  var favicon_path = $('link[rel="shortcut icon"]').attr('href');
-  $('.group_tabs a').live('click', function(){
-    if (!$(this).parent().hasClass('active')) {
-      $('.group_tabs a').parent().removeClass('active');
-      $(this).parent().addClass('active');
-      $('.file_list_container').hide();
-      $(".file_list_container" + $(this).attr('href')).show();
-      window.location.href = window.location.href.split('#')[0] + $(this).attr('href').replace('#', '#_');
-
-      // Force favicon reload - otherwise the location change containing anchor would drop the favicon...
-      // Works only on firefox, but still... - Anyone know a better solution to force favicon on local file?
-      $('link[rel="shortcut icon"]').remove();
-      $('head').append('<link rel="shortcut icon" type="image/png" href="'+ favicon_path +'" />');
-    };
-    return false;
-  });
-
-  if (jQuery.url.attr('anchor')) {
-    var anchor = jQuery.url.attr('anchor')
-    if (anchor.length == 40) {
-      $('a.src_link[href=#' + anchor + ']').click();
+      setTimeout(function() {
+        $("a[data-target=#" + currentAnchor + "]:first").trigger("click");
+      }, 10);
     } else {
-      $('.group_tabs a.'+anchor.replace('_', '')).click();
+      $(".nav-tabs a[href=#" + currentAnchor.replace("_", "") + "]").trigger("click");
     }
   } else {
-    $('.group_tabs a:first').click();
+    $(".nav-tabs a:first").trigger("click");
   };
-
-  $("abbr.timeago").timeago();
-  $('#loading').fadeOut();
-  $('#wrapper').show();
 });

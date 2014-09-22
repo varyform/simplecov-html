@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "simplecov-html"
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'sprockets'
+  s.add_development_dependency 'sprockets', '~> 2.12.2'
   s.add_development_dependency 'sass'
 
   s.files         = `git ls-files`.split("\n")

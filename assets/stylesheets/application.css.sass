@@ -1,0 +1,259 @@
+//= require vendor/bootstrap.min
+//= require vendor/font-awesome.min
+//= require vendor/highlight
+//= require_self
+
+$screen-xs-min: 480px
+$screen-xs-max: $screen-xs-min - 1px
+
+$screen-sm-min: 768px
+$screen-sm-max: $screen-sm-min - 1px
+
+$screen-md-min: 992px
+$screen-md-max: $screen-md-min - 1px
+
+$screen-lg-min: 1200px
+
+body
+  background: #222
+  padding: 20px 0
+
+.file_list
+  width: 100%
+
+  td, th
+    text-align: right
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+  th
+    white-space: nowrap
+    cursor: pointer
+    position: relative
+    padding-right: 14px !important
+
+    > .fa
+      color: #ccc
+      position: absolute
+      right: 2px
+      top: 8px
+
+    > .fa-sort-down, > .fa-sort-up
+      color: #333
+
+    &:hover > .fa-sort
+      color: #333
+
+  .file-name-td
+    text-align: left
+
+    a
+      color: #333
+      cursor: pointer
+      white-space: nowrap
+
+      .fa
+        color: #aaa
+
+  th.file-name-td
+    padding-right: 5px !important
+    padding-left: 14px !important
+
+    > .fa
+      right: auto
+      left: 2px
+
+.green
+  color: #090
+
+.yellow
+  color: #DA0
+
+.red
+  color: #900
+
+.strong
+  font-weight: bold
+
+.nav
+  border: none
+  overflow-y: hidden
+  overflow-x: auto
+  white-space: nowrap
+  -webkit-transform: translate3d(0, 0, 0)
+  margin: 0 1px
+
+  > li
+    margin-bottom: 0
+    display: inline-block
+    float: none
+
+    > a
+      padding: 8px 10px
+      color: #333
+      border: none !important
+      background: #e6e6e6
+
+    &.active, &:hover
+      > a
+        border: none !important
+
+    &:last-child
+      > a
+        margin-right: 0
+
+#container
+  background: #fff
+  border: #111 solid 1px
+  border-top: none
+  border-bottom-width: 2px
+  border-bottom-left-radius: 4px
+  border-bottom-right-radius: 4px
+  padding: 20px
+
+#footer
+  margin-top: 20px
+  text-align: right
+
+  span
+    margin: 0 4px
+    display: inline-block
+
+.page-header
+  margin: 10px 0
+
+.dataTables_info
+  color: #aaa
+
+.dataTables_empty
+  text-align: left !important
+
+.dataTables_filter
+  margin-bottom: 10px
+
+  .form-control
+    display: inline-block
+    width: 300px
+    margin-left: 10px
+
+.modal-body
+  padding: 0
+
+.modal-header
+  padding: 15px 40px 0 15px
+  border: none
+
+  .close
+    position: absolute
+    right: 15px
+
+  h2
+    margin: 0 0 4px 0
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+
+.focus-hidden
+  position: absolute
+  top: -9999px
+  left: -9999px
+  opacity: 0
+
+.source_table
+  font-family: "Source Code Pro", "Monaco", "Inconsolata", "Consolas", monospace
+  margin: 0
+  padding: 0
+  white-space: normal
+  background-color: #333
+  border: none
+  font-size: 12px
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+
+  ol
+    margin: 0px
+    padding: 0px
+    margin-left: 45px
+    color: white
+
+  li
+    margin: 0px
+    padding: 2px 6px
+    border-left: 5px solid white
+
+    code
+      white-space: pre
+      white-space: pre-wrap
+      color: #333
+
+  .covered
+    border-color: #090
+
+  .missed
+    border-color: #900
+
+  .never
+    border-color: #333
+
+  .skipped
+    border-color: #fc0
+
+  .covered
+    &:nth-child(odd)
+      background-color: #CDF2CD
+
+    &:nth-child(even)
+      background-color: #DBF2DB
+
+  .missed
+    &:nth-child(odd)
+      background-color: #F7C0C0
+
+    &:nth-child(even)
+      background-color: #F7CFCF
+
+  .never
+    &:nth-child(odd)
+      background-color: #efefef
+
+    &:nth-child(even)
+      background-color: #f4f4f4
+
+  .skipped
+    &:nth-child(odd)
+      background-color: #FBF0C0
+
+    &:nth-child(even)
+      background-color: #FBFfCf
+
+@media (max-width: $screen-xs-max)
+  .dataTables_filter
+    .form-control
+      display: block
+      width: 100%
+      margin-left: 0
+
+@media (max-width: $screen-sm-max)
+  .page-header
+    font-size: 22px
+    margin-top: 0
+
+  .modal-header
+    h2
+      font-size: 20px
+
+  .source_table
+    font-size: 10px
+
+    .badge
+      font-size: 10px
+      padding-left: 5px
+      padding-right: 5px
+
+@media (max-width: $screen-sm-max)
+  .file_list
+    table-layout: fixed
+
+    .coverage-td
+      width: 100px !important

@@ -9,7 +9,7 @@ if Gem::Version.new(SimpleCov::VERSION) < Gem::Version.new("0.8.0")
   raise RuntimeError, "The version of SimpleCov you are using is too old. Please update with `gem install simplecov` or `bundle update simplecov`"
 end
 
-class SimpleCov::Formatter::HTMLFormatter
+class SimpleCov::Formatter::BootstrapHTML
   def format(result)
     Dir[File.join(File.dirname(__FILE__), '../public/*')].each do |path|
       FileUtils.cp_r(path, asset_output_path)
@@ -20,7 +20,7 @@ class SimpleCov::Formatter::HTMLFormatter
     end
     puts output_message(result)
   end
-  
+
   def file_mode_format
     format = 'w+'
 
@@ -105,7 +105,7 @@ class SimpleCov::Formatter::HTMLFormatter
   end
 
   def link_to_source_file(source_file)
-    %Q(<a href="##{id source_file}" class="src_link" title="#{shortened_filename source_file}">#{shortened_filename source_file}</a>)
+    %Q(<a data-toggle="modal" data-target="##{id source_file}" title="#{shortened_filename source_file}"><i class="fa fa-file-code-o"></i> #{shortened_filename source_file}</a>)
   end
 end
 

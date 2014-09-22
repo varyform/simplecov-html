@@ -1,44 +1,52 @@
-<div class="file_list_container" id="<%= title_id %>">
-  <h2>
-    <span class="group_name"><%= title %></span>
-    (<span class="covered_percent"><span class="<%= coverage_css_class(source_files.covered_percent) %>"><%= source_files.covered_percent.round(2) %>%</span></span>
-     covered at
-     <span class="covered_strength">
-       <span class="<%= strength_css_class(source_files.covered_strength) %>">
-         <%= source_files.covered_strength.round(2) %>
-       </span>
-    </span> hits/line)
-  </h2>
+<div class="tab-pane" id="<%= title_id %>">
+  <h1 class="page-header">
+    <%= title %>
+    (<span class="<%= coverage_css_class(source_files.covered_percent) %>"><%= source_files.covered_percent.round(2) %>%</span>
+    covered<span class="visible-xs-inline">)</span>
+    <span class="hidden-xs">
+      at
+      <span class="<%= strength_css_class(source_files.covered_strength) %>">
+        <%= source_files.covered_strength.round(2) %>
+      </span>
+      hits/line)
+    </span>
+  </h1>
   <a name="<%= title_id %>"></a>
-  <div>
+  <p class="lead">
     <b><%= source_files.length %></b> files in total.
-    <b><%= source_files.lines_of_code %></b> relevant lines. 
+    <b><%= source_files.lines_of_code %></b> relevant lines.
     <span class="green"><b><%= source_files.covered_lines %></b> lines covered</span> and
     <span class="red"><b><%= source_files.missed_lines %></b> lines missed </span>
-  </div>
-  <table class="file_list">
+  </p>
+  <table class="file_list table table-condensed table-striped table-hover">
     <thead>
       <tr>
-        <th>File</th>
-        <th>% covered</th>
-        <th>Lines</th>
-        <th>Relevant Lines</th>
-        <th>Lines covered</th>
-        <th>Lines missed</th>
-        <th>Avg. Hits / Line</th>
+        <th class="file-name-td">File</th>
+        <th class="coverage-td">% covered</th>
+        <th class="hidden-xs hidden-sm">Lines</th>
+        <th class="hidden-xs">Relevant Lines</th>
+        <th class="hidden-xs">
+          <div class="visible-md visible-lg">Lines covered</div>
+          <div class="visible-sm">Covered</div>
+        </th>
+        <th class="hidden-xs">
+          <div class="visible-md visible-lg">Lines missed</div>
+          <div class="visible-sm">Missed</div>
+        </th>
+        <th class="hidden-xs hidden-sm">Avg. Hits / Line</th>
       </tr>
     </thead>
     <tbody>
       <% source_files.each do |source_file| %>
-      <tr>
-        <td class="strong"><%= link_to_source_file(source_file) %></td>
-        <td class="<%= coverage_css_class(source_file.covered_percent) %> strong"><%= source_file.covered_percent.round(2).to_s %> %</td>
-        <td><%= source_file.lines.count %></td>
-        <td><%= source_file.covered_lines.count + source_file.missed_lines.count %></td>
-        <td><%= source_file.covered_lines.count %></td>
-        <td><%= source_file.missed_lines.count %></td>
-        <td><%= source_file.covered_strength %></td>
-      </tr>
+        <tr>
+          <td class="file-name-td"><%= link_to_source_file(source_file) %></td>
+          <td class="coverage-td <%= coverage_css_class(source_file.covered_percent) %> strong"><%= source_file.covered_percent.round(2).to_s %> %</td>
+          <td class="hidden-xs hidden-sm"><%= source_file.lines.count %></td>
+          <td class="hidden-xs"><%= source_file.covered_lines.count + source_file.missed_lines.count %></td>
+          <td class="hidden-xs"><%= source_file.covered_lines.count %></td>
+          <td class="hidden-xs"><%= source_file.missed_lines.count %></td>
+          <td class="hidden-xs hidden-sm"><%= source_file.covered_strength %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>
