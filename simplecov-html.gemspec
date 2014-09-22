@@ -3,17 +3,17 @@ $:.push File.expand_path("../lib", __FILE__)
 require 'simplecov-html/version'
 
 Gem::Specification.new do |s|
-  s.name        = "simplecov-html"
+  s.name        = "simplecov-formatter-bootstrap"
   s.version     = SimpleCov::Formatter::HTMLFormatter::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Christoph Olszowka"]
-  s.email       = ["christoph at olszowka de"]
-  s.homepage    = "https://github.com/colszowka/simplecov-html"
+  s.authors     = ["Rodrigo Díaz"]
+  s.email       = ["rdiazv89@gmail.com"]
+  s.homepage    = "https://github.com/rdiazv/simplecov-html"
   s.summary     = %Q{Default HTML formatter for SimpleCov code coverage tool for ruby 1.9+}
   s.description = %Q{Default HTML formatter for SimpleCov code coverage tool for ruby 1.9+}
   s.license     = "MIT"
 
-  s.rubyforge_project = "simplecov-html"
+  s.rubyforge_project = "simplecov-formatter-bootstrap"
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'sprockets', '~> 2.12.2'
