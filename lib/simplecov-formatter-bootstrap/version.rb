@@ -1,7 +1,7 @@
 module SimpleCov
   module Formatter
-    class HTMLFormatter
-      VERSION = "1.0.0"
+    class Bootstrap
+      VERSION = "1.0.1"
     end
   end
 end

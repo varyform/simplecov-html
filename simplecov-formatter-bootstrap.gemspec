@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require 'simplecov-html/version'
+require 'simplecov-formatter-bootstrap/version'
 
 Gem::Specification.new do |s|
   s.name        = "simplecov-formatter-bootstrap"
-  s.version     = SimpleCov::Formatter::HTMLFormatter::VERSION
+  s.version     = SimpleCov::Formatter::Bootstrap::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Rodrigo Díaz"]
   s.email       = ["rdiazv89@gmail.com"]

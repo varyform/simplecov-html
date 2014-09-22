@@ -110,4 +110,4 @@ class SimpleCov::Formatter::Bootstrap
 end
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__)))
-require 'simplecov-html/version'
+require 'simplecov-formatter-bootstrap/version'
